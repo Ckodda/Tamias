@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             __DIR__.'/../routes/api/Currencies.php',
             __DIR__.'/../routes/api/Events.php',
             __DIR__.'/../routes/api/PaymentMethods.php',
+            __DIR__.'/../routes/api/Users.php',
         ],
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
@@ -51,6 +52,14 @@ return Application::configure(basePath: dirname(__DIR__))
                 Code: 422,
                 Content: $e->errors()
             );
+        });
+
+        $exceptions->render(function (Throwable $e,Request $request){
+           return ApiResponse::error(
+               Message: $e->getMessage(),
+               Code: 500,
+               Content: $e->getCode()
+           );
         });
 
     })->create();

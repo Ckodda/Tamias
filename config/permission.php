@@ -17,6 +17,7 @@ return [
         'model_has_permissions' => 'ModelHasPermissions',
         'model_has_roles' => 'ModelHasRoles',
         'role_has_permissions' => 'RoleHasPermissions',
+        'users' => 'Users', // Added this line
     ],
 
     'column_names' => [

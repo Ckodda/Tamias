@@ -76,6 +76,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return [
             'Password' => 'hashed',
+            'CreatedAt' => 'datetime',
+            'UpdatedAt' => 'datetime',
         ];
     }
 }

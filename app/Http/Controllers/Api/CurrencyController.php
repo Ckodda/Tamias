@@ -78,6 +78,8 @@ class CurrencyController extends Controller
      * Actualiza una Moneda existente.
      *
      * @param UpdateCurrencyRequest $request
+     * @param UpdateCurrencyAction $action
+     * @return ApiResponse
      */
     public function update(UpdateCurrencyRequest $request, UpdateCurrencyAction $action): ApiResponse
     {

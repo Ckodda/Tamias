@@ -6,10 +6,12 @@ use App\Repositories\Contracts\CostCenterRepositoryInterface;
 use App\Repositories\Contracts\CurrencyRepositoryInterface;
 use App\Repositories\Contracts\EventRepositoryInterface;
 use App\Repositories\Contracts\PaymentMethodRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Eloquent\CostCenterRepository;
 use App\Repositories\Eloquent\CurrencyRepository;
 use App\Repositories\Eloquent\EventRepository;
 use App\Repositories\Eloquent\PaymentMethodRepository;
+use App\Repositories\Eloquent\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -23,6 +25,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CurrencyRepositoryInterface::class, CurrencyRepository::class);
         $this->app->bind(EventRepositoryInterface::class, EventRepository::class);
         $this->app->bind(PaymentMethodRepositoryInterface::class, PaymentMethodRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 
     /**
