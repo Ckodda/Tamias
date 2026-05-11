@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('CostCenters', function (Blueprint $table) {
+            $table->foreignId('CreatedBy')->nullable()->constrained('Users', 'Id')->after('UpdatedAt');
+            $table->foreignId('UpdatedBy')->nullable()->constrained('Users', 'Id')->after('CreatedBy');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('CostCenters', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('CreatedBy');
+            $table->dropColumn('CreatedBy');
+            $table->dropConstrainedForeignId('UpdatedBy');
+            $table->dropColumn('UpdatedBy');
+        });
+    }
+};
