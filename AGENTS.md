@@ -28,6 +28,12 @@ Para cada nuevo concepto, se debe seguir estrictamente este orden:
     -   `Update{Concepto}.sql`: Debe usar `COALESCE` para permitir actualizaciones parciales.
 -   **Migración de SPs**: Una migración que cree el esquema `"{Modulo}Pkg"` y cargue los archivos `.sql`.
 
+#### Convenciones de Nomenclatura en Migraciones:
+-   **Claves Primarias**: Se nombran `Id` (PascalCase).
+-   **Columnas de Auditoría**: Se nombran `CreatedAt`, `UpdatedAt`, `CreatedBy`, `UpdatedBy` (PascalCase). `CreatedAt` y `UpdatedAt` usan `useCurrent()`. `CreatedBy` y `UpdatedBy` son `foreignId` que referencian `Users.Id`.
+-   **Nombres de Tablas**: Generalmente en plural y PascalCase (ej. `Users`, `Currencies`), aunque algunas migraciones pueden usar nombres en minúsculas (ej. `loans`).
+-   **Claves Foráneas**: Se usa `foreignId` para `CreatedBy` y `UpdatedBy`. Para otras claves foráneas, se usa `unsignedBigInteger` seguido de `foreign()` y `references('Id')`. Los nombres de las columnas de claves foráneas suelen ser `[NombreTablaRelacionada]Id` (ej. `CurrencyId`).
+
 ### 2. Capa de Datos (Eloquent)
 -   **Modelo**: Extender `BaseModel`. Definir `$table` y `casts`.
 -   **Repository Interface**: Definir métodos `create`, `getAll` y `update`.

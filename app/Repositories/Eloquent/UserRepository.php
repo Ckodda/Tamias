@@ -22,7 +22,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             DB::beginTransaction();
             $results = $this->callProcedure(
                 procedure: '"UsersPkg"."CreateUser"',
-                parameters: [$fullName, $email, $password, $createdBy],
+                parameters: [$fullName, $email, $password,$createdBy],
                 cursorName: $cursorName
             );
             DB::commit();

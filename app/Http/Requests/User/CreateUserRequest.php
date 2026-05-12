@@ -18,8 +18,6 @@ class CreateUserRequest extends Data
         #[Required, Email, Max(255)]
         public string $Email,
         #[Required, StringType, Min(8), Max(255)]
-        public string $Password,
-        #[Required, IntegerType]
-        public int    $CreatedBy,
+        public string $Password
     ) {}
 }
