@@ -22,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
             __DIR__.'/../routes/api/Users.php',
             __DIR__.'/../routes/api/Loans.php',
             __DIR__ . '/../routes/api/Commitments.php',
+            __DIR__ . '/../routes/api/Transactions.php',
         ],
         commands: __DIR__.'/../routes/console.php',
         health: '/up',

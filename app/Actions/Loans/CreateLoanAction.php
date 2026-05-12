@@ -22,7 +22,7 @@ class CreateLoanAction
         try {
             $userId = Auth::id();
 
-            $event = $this->repository->create(
+            $loan = $this->repository->create(
                 lenderName: $request->LenderName,
                 principalAmount: $request->PrincipalAmount,
                 interestAmount: $request->InterestAmount,
@@ -35,7 +35,7 @@ class CreateLoanAction
                 updatedBy: $userId
             );
 
-            return LoanResponse::fromModel($event);
+            return LoanResponse::fromModel($loan);
 
         } catch (\Exception $e) {
             throw $e;

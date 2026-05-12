@@ -25,7 +25,7 @@ class CreateCommitmentAction
         try {
             $userId = Auth::id();
 
-            $costCenter = $this->repository->create(
+            $commitment = $this->repository->create(
                 userId: $request->UserId,
                 costCenterId: $request->CostCenterId,
                 eventId: $request->EventId,
@@ -35,7 +35,7 @@ class CreateCommitmentAction
                 createdBy: $userId
             );
 
-            return CommitmentResponse::fromModel($costCenter);
+            return CommitmentResponse::fromModel($commitment);
 
         } catch (ValidationException $e) {
             throw $e;
