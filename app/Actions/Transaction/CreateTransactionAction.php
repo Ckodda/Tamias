@@ -28,11 +28,7 @@ class CreateTransactionAction
             $receiptPath = null;
 
             // 1. Procesar la subida de la imagen si existe
-            if ($request->ReceiptImage) {
-                // Guardamos en el disco 'public' dentro de la carpeta 'receipts'
-                // Esto genera un nombre único automáticamente
-                $receiptPath = $request->ReceiptImage->store('receipts', 'public');
-            }
+            $receiptPath = $request->ReceiptImage?->store('receipts', 'public');
 
             // 2. Llamada al repositorio con el orden exacto de parámetros del Procedure
             $transaction = $this->repository->create(

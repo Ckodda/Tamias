@@ -12,6 +12,7 @@ use Illuminate\Support\Carbon;
  * @property float $InterestAmount
  * @property float $TotalToRepay
  * @property Carbon $RepaymentDueDate
+ * @property float $CurrentBalance
  * @property string $LoanStatus
  * @property bool $IsActive
  * @property int $CurrencyId
@@ -26,6 +27,7 @@ use Illuminate\Support\Carbon;
     'InterestAmount',
     'TotalToRepay',
     'RepaymentDueDate',
+    'CurrentBalance',
     'LoanStatus',
     'IsActive',
     'CurrencyId',

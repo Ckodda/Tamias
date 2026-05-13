@@ -11,7 +11,7 @@ use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Attributes\Validation\StringType;
 use Spatie\LaravelData\Data;
 
-class CreatePendingExpenseRequestD extends Data
+class CreatePendingExpenseRequest extends Data
 {
     public function __construct(
         #[Required, IntegerType]

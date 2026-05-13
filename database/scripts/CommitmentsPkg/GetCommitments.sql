@@ -25,6 +25,7 @@ BEGIN
         C."CommitmentAmount",
         C."FrequencyType",
         C."CurrentStatus",
+        C."IsActive",
         C."CreatedAt",
         C."UpdatedAt"
     FROM "Commitments" C

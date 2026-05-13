@@ -18,6 +18,7 @@ class GetTransactionsAction
     public function execute(GetTransactionsRequest $request): PaginatedResponse
     {
         $collection = $this->repository->getAll(
+            id: $request->Id,
             startDate: $request->StartDate,
             endDate: $request->EndDate,
             costCenterId: $request->CostCenterId,

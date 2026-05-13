@@ -12,7 +12,7 @@ class CommitmentResponse extends Data
         public int $Id,
         public int $UserId,
         public int $CostCenterId,
-        public int $EventId,
+        public ?int $EventId,
         public float $CommitmentAmount,
         public string $FrequencyType,
         public string $CurrentStatus,

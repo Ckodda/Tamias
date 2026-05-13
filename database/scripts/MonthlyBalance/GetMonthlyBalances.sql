@@ -21,7 +21,7 @@ BEGIN
         MB."TotalExpenses",
         MB."ClosingBalance",
         MB."CostCenterId",
-        CC."Name" AS "CenterName",
+        CC."CenterName" AS "CenterName",
         -- Indicador de rendimiento (KPI)
         CASE
             WHEN MB."TotalIncomes" > 0

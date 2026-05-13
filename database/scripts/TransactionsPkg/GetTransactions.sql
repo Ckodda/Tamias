@@ -21,9 +21,9 @@ BEGIN
         COUNT(*) OVER() AS "TotalCount",
         T.*,
         U."FullName" AS "UserFullName",
-        CC."Name" AS "CostCenterName",
-        C."Symbol" AS "CurrencySymbol",
-        PM."Name" AS "PaymentMethodName"
+        CC."CenterName" AS "CostCenterName",
+        C."CurrencySymbol" AS "CurrencySymbol",
+        PM."MethodName" AS "PaymentMethodName"
     FROM "Transactions" T
     LEFT JOIN "Users" U ON T."UserId" = U."Id"
     INNER JOIN "CostCenters" CC ON T."CostCenterId" = CC."Id"

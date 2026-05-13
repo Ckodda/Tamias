@@ -135,7 +135,7 @@ class CommitmentRepository extends BaseRepository implements CommitmentRepositor
         try {
             DB::beginTransaction();
             $results = $this->callProcedure(
-                procedure: '"CommitmentsPkg"."UpdateCommiment"',
+                procedure: '"CommitmentsPkg"."UpdateCommitment"',
                 parameters: [$id, $userId, $costCenterId, $eventId, $commitmentAmount, $frequencyType, $currentStatus, $updatedBy],
                 cursorName: $cursorName
             );

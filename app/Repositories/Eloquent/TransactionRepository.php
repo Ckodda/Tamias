@@ -200,6 +200,7 @@ class TransactionRepository extends BaseRepository implements TransactionReposit
             $results = $this->callProcedure(
                 procedure: '"TransactionsPkg"."GetTransactions"',
                 parameters: [
+                    $id,
                     $startDate,
                     $endDate,
                     $costCenterId,

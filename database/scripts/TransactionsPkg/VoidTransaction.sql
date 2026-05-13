@@ -55,14 +55,14 @@ BEGIN
         IF "V_Type" = 'Expense' THEN
             -- Era un pago realizado: la deuda aumenta de nuevo
             UPDATE "Loans"
-            SET "RemainingBalance" = "RemainingBalance" + "V_Amount",
+            SET "CurrentBalance" = "CurrentBalance" + "V_Amount",
                 "UpdatedBy" = "P_UpdatedBy",
                 "UpdatedAt" = NOW()
             WHERE "Id" = "V_LoanId";
         ELSIF "V_Type" = 'Income' THEN
             -- Era un desembolso recibido: la deuda disminuye (se cancela el ingreso)
             UPDATE "Loans"
-            SET "RemainingBalance" = "RemainingBalance" - "V_Amount",
+            SET "CurrentBalance" = "CurrentBalance" - "V_Amount",
                 "UpdatedBy" = "P_UpdatedBy",
                 "UpdatedAt" = NOW()
             WHERE "Id" = "V_LoanId";

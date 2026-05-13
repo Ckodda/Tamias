@@ -1,7 +1,7 @@
 -- Crear el esquema si no existe
 CREATE SCHEMA IF NOT EXISTS "TransactionsPkg";
 
--- Procedimiento para crear una transacción corregido
+-- Procedimiento para crear una transacción actualizado con CurrentBalance y LoanStatus
 CREATE OR REPLACE PROCEDURE "TransactionsPkg"."CreateTransaction"(
     "P_UserId" BIGINT,
     "P_CostCenterId" BIGINT,
@@ -11,7 +11,7 @@ CREATE OR REPLACE PROCEDURE "TransactionsPkg"."CreateTransaction"(
     "P_TransactionType" VARCHAR, -- 'Income' | 'Expense'
     "P_AccountingPeriod" DATE,
     "P_TransactionDescription" TEXT,
-    "P_CreatedBy" BIGINT, -- Parámetro obligatorio movido antes de los opcionales
+    "P_CreatedBy" BIGINT,
     "P_EventId" BIGINT DEFAULT NULL,
     "P_PendingExpenseId" BIGINT DEFAULT NULL,
     "P_LoanId" BIGINT DEFAULT NULL,
@@ -25,14 +25,13 @@ DECLARE
     "V_LoanExists" BOOLEAN;
     "V_CurrentLoanBalance" NUMERIC;
 BEGIN
-    -- [Misma lógica de validaciones que definimos antes]
     -- 1. VALIDACIONES DE INTEGRIDAD FÍSICA
     IF NOT EXISTS (SELECT 1 FROM "CostCenters" WHERE "Id" = "P_CostCenterId") THEN
         OPEN "P_ResultSet" FOR SELECT 1 AS "ErrorId", 'El centro de costo no existe.' AS "ErrorMessage";
         RETURN;
     END IF;
 
-    -- 2. VALIDACIÓN DE LOANS
+    -- 2. VALIDACIÓN DE LOANS (Usando CurrentBalance de imagen_2.png)
     IF "P_LoanId" IS NOT NULL THEN
         SELECT EXISTS(SELECT 1 FROM "Loans" WHERE "Id" = "P_LoanId") INTO "V_LoanExists";
         IF NOT "V_LoanExists" THEN
@@ -40,10 +39,11 @@ BEGIN
             RETURN;
         END IF;
 
+        -- Si es un gasto (pago de deuda), validamos que no pague más de lo que debe
         IF "P_TransactionType" = 'Expense' THEN
-            SELECT "RemainingBalance" INTO "V_CurrentLoanBalance" FROM "Loans" WHERE "Id" = "P_LoanId";
+            SELECT "CurrentBalance" INTO "V_CurrentLoanBalance" FROM "Loans" WHERE "Id" = "P_LoanId";
             IF "P_TransactionAmount" > "V_CurrentLoanBalance" THEN
-                OPEN "P_ResultSet" FOR SELECT 9 AS "ErrorId", 'El monto excede el saldo del préstamo.' AS "ErrorMessage";
+                OPEN "P_ResultSet" FOR SELECT 9 AS "ErrorId", 'El monto excede el saldo pendiente del préstamo.' AS "ErrorMessage";
                 RETURN;
             END IF;
         END IF;
@@ -61,7 +61,7 @@ BEGIN
         END IF;
     END IF;
 
-    -- 4. INSERCIÓN
+    -- 4. INSERCIÓN DE LA TRANSACCIÓN
     OPEN "P_ResultSet" FOR
     WITH "Inserted" AS (
         INSERT INTO "Transactions" (
@@ -81,16 +81,30 @@ BEGIN
     SELECT 0 AS "ErrorId", NULL AS "ErrorMessage", * FROM "Inserted";
 
     -- 5. EFECTOS SECUNDARIOS
+
+    -- Actualizar Gasto Pendiente
     IF "P_PendingExpenseId" IS NOT NULL THEN
         UPDATE "PendingExpenses" SET "PaymentStatus" = 'Paid', "UpdatedAt" = NOW() WHERE "Id" = "P_PendingExpenseId";
     END IF;
 
+    -- Actualizar Saldo de Préstamo y Estado
     IF "P_LoanId" IS NOT NULL THEN
         IF "P_TransactionType" = 'Expense' THEN
-            UPDATE "Loans" SET "RemainingBalance" = "RemainingBalance" - "P_TransactionAmount", "UpdatedAt" = NOW() WHERE "Id" = "P_LoanId";
+            UPDATE "Loans"
+            SET "CurrentBalance" = "CurrentBalance" - "P_TransactionAmount",
+                "UpdatedAt" = NOW()
+            WHERE "Id" = "P_LoanId";
         ELSIF "P_TransactionType" = 'Income' THEN
-            UPDATE "Loans" SET "RemainingBalance" = "RemainingBalance" + "P_TransactionAmount", "UpdatedAt" = NOW() WHERE "Id" = "P_LoanId";
+            UPDATE "Loans"
+            SET "CurrentBalance" = "CurrentBalance" + "P_TransactionAmount",
+                "UpdatedAt" = NOW()
+            WHERE "Id" = "P_LoanId";
         END IF;
+
+        -- Lógica adicional: Si el saldo llega a 0, marcar como pagado
+        UPDATE "Loans"
+        SET "LoanStatus" = 'Paid'
+        WHERE "Id" = "P_LoanId" AND "CurrentBalance" <= 0;
     END IF;
 
 EXCEPTION

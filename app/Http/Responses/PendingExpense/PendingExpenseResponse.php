@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Responses\Currency;
+namespace App\Http\Responses\PendingExpense;
 
-use App\Models\Currency;
-use Spatie\LaravelData\Data;
+use App\Models\PendingExpense;
 use Illuminate\Support\Facades\Auth;
 
-class CurrencyResponse extends Data
+class PendingExpenseResponse
 {
     public function __construct(
-        public int $Id,
-        public string $CurrencyName,
-        public string $CurrencySymbol,
-        public string $CurrencyCode,
-        public float $ExchangeRate,
+        public ?int $Id,
+        public ?int $CostCenterId,
+        public ?string $ExpenseDescription,
+        public ?float $TotalAmount,
+        public ?string $DueDate,
+        public ?string $ProviderName,
+        public ?string $PaymentStatus,
         public bool $IsActive,
         public ?int $CreatedBy,
         public ?int $UpdatedBy,
@@ -21,17 +22,19 @@ class CurrencyResponse extends Data
         public string $UpdatedAt,
     ) {}
 
-    public static function fromModel(Currency $model): self
+    public static function fromModel(PendingExpense $model): self
     {
         $user = Auth::user();
         $canSeeAudit = $user && ($user->hasRole('SuperAdmin') || $user->hasRole('Admin'));
 
         $data = new self(
             Id: $model->Id,
-            CurrencyName: $model->CurrencyName,
-            CurrencySymbol: $model->CurrencySymbol,
-            CurrencyCode: $model->CurrencyCode,
-            ExchangeRate: $model->ExchangeRate,
+            CostCenterId: $model->CostCenterId,
+            ExpenseDescription: $model->ExpenseDescription,
+            TotalAmount: $model->TotalAmount,
+            DueDate: $model->DueDate->toIso8601String(),
+            ProviderName: $model->ProviderName,
+            PaymentStatus: $model->PaymentStatus,
             IsActive: $model->IsActive,
             CreatedBy: $model->CreatedBy,
             UpdatedBy: $model->UpdatedBy,

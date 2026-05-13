@@ -7,4 +7,5 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 abstract class TestCase extends BaseTestCase
 {
     //
+    protected string $apiToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3RhbWlhcy50ZXN0L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzc4NzA1OTUyLCJleHAiOjE3Nzg3MDk1NTIsIm5iZiI6MTc3ODcwNTk1MiwianRpIjoiQWh2dEhhemFNVFN3eGFIbSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.rVJHMT7dTYi9xAekdxfp0NsAtNOU6u3pgUBl5NmZJ_8';
 }

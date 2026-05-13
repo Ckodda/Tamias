@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Transaction;
 
+use Spatie\LaravelData\Attributes\Validation\Sometimes;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Attributes\Validation\Nullable;
@@ -14,6 +15,7 @@ use Spatie\LaravelData\Attributes\Validation\IntegerType;
 use Spatie\LaravelData\Attributes\Validation\Image;
 use Spatie\LaravelData\Attributes\Validation\Max;
 use Illuminate\Http\UploadedFile;
+use Spatie\LaravelData\Optional;
 
 class CreateTransactionRequest extends Data
 {
@@ -51,10 +53,12 @@ class CreateTransactionRequest extends Data
         #[Nullable, IntegerType]
         public ?int $LoanId,
 
-        #[Nullable, Numeric, Min(0)]
-        public float $AppliedExchangeRate = 1.0,
+        #[Sometimes, Nullable, Numeric, Min(0)]
+        public float|Optional $AppliedExchangeRate = 1.0,
 
         #[Nullable, Image, Max(2048)]
         public ?UploadedFile $ReceiptImage,
-    ) {}
+    ) {
+        $this->AppliedExchangeRate = $AppliedExchangeRate instanceof Optional ? 1.0 : $AppliedExchangeRate;
+    }
 }
