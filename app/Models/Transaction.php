@@ -33,6 +33,11 @@ use Illuminate\Support\Carbon;
  * @property-read PaymentMethod $PaymentMethod
  * @property-read Loan|null $Loan
  * @property-read PendingExpense|null $PendingExpense
+ *
+ * @property string|null $UserFullName
+ * @property string|null $CostCenterName
+ * @property string|null $CurrencySymbol
+ * @property string|null $PaymentMethodName
  */
 #[Fillable([
     'UserId',

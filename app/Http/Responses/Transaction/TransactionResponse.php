@@ -27,7 +27,12 @@ class TransactionResponse extends Data
         public ?int $CreatedBy,
         public ?int $UpdatedBy,
         public string $CreatedAt,
-        public string $UpdatedAt
+        public string $UpdatedAt,
+
+        public ?string $UserFullName = null,
+        public ?string $CostCenterName = null,
+        public ?string $CurrencySymbol = null,
+        public ?string $PaymentMethodName = null
     )
     { }
 
@@ -56,7 +61,11 @@ class TransactionResponse extends Data
             CreatedBy: $model->CreatedBy,
             UpdatedBy: $model->UpdatedBy,
             CreatedAt: $model->CreatedAt->toIso8601String(),
-            UpdatedAt: $model->UpdatedAt->toIso8601String()
+            UpdatedAt: $model->UpdatedAt->toIso8601String(),
+            UserFullName: $model->UserFullName,
+            CostCenterName: $model->CostCenterName,
+            CurrencySymbol: $model->CurrencySymbol,
+            PaymentMethodName: $model->PaymentMethodName
         );
 
         // Si el usuario no es Admin/SuperAdmin, se excluyen los campos sensibles del JSON

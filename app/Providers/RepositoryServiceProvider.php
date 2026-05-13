@@ -7,16 +7,20 @@ use App\Repositories\Contracts\CostCenterRepositoryInterface;
 use App\Repositories\Contracts\CurrencyRepositoryInterface;
 use App\Repositories\Contracts\EventRepositoryInterface;
 use App\Repositories\Contracts\LoanRepositoryInterface;
+use App\Repositories\Contracts\MonthlyBalanceRepositoryInterface;
 use App\Repositories\Contracts\PaymentMethodRepositoryInterface;
 use App\Repositories\Contracts\PendingExpenseRepositoryInterface;
+use App\Repositories\Contracts\TransactionRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Eloquent\CommitmentRepository;
 use App\Repositories\Eloquent\CostCenterRepository;
 use App\Repositories\Eloquent\CurrencyRepository;
 use App\Repositories\Eloquent\EventRepository;
 use App\Repositories\Eloquent\LoanRepository;
+use App\Repositories\Eloquent\MonthlyBalanceRepository;
 use App\Repositories\Eloquent\PaymentMethodRepository;
 use App\Repositories\Eloquent\PendingExpenseRepository;
+use App\Repositories\Eloquent\TransactionRepository;
 use App\Repositories\Eloquent\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -35,6 +39,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(LoanRepositoryInterface::class, LoanRepository::class);
         $this->app->bind(CommitmentRepositoryInterface::class, CommitmentRepository::class);
         $this->app->bind(PendingExpenseRepositoryInterface::class, PendingExpenseRepository::class);
+        $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
+        $this->app->bind(MonthlyBalanceRepositoryInterface::class, MonthlyBalanceRepository::class);
     }
 
     /**

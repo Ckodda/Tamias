@@ -38,6 +38,9 @@ class CostCenterRepository extends BaseRepository implements CostCenterRepositor
         } catch (ValidationException|Exception $e) { DB::rollBack(); throw $e; }
     }
 
+    /**
+     * @throws Exception
+     */
     public function getAll(?int $id = null, ?string $centerName = null, ?string $codeCostCenter = null, ?bool $isActive = null, int $pageSize = 10, int $pageNumber = 1): Collection
     {
         $cursorName = 'rs_CostCenters';

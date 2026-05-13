@@ -20,7 +20,7 @@ BEGIN
     SELECT
         COUNT(*) OVER() AS "TotalCount",
         T.*,
-        U."FirstName" || ' ' || U."LastName" AS "UserName",
+        U."FullName" AS "UserFullName",
         CC."Name" AS "CostCenterName",
         C."Symbol" AS "CurrencySymbol",
         PM."Name" AS "PaymentMethodName"
