@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Actions\Loans\CreateLoanAction;
-use App\Actions\Loans\GetLoansAction;
-use App\Actions\Loans\UpdateLoanAction;
+use App\Actions\Loan\CreateLoanAction;
+use App\Actions\Loan\GetLoansAction;
+use App\Actions\Loan\UpdateLoanAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Loan\CreateLoanRequest;
 use App\Http\Requests\Loan\GetLoansRequest;

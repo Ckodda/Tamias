@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\User\CreateUserAction;
+use App\Actions\User\GetUserRolesAndPermissionsAction;
 use App\Actions\User\GetUsersAction;
 use App\Actions\User\UpdateUserAction;
 use App\Http\Controllers\Controller;
@@ -12,6 +13,7 @@ use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Responses\ApiResponse;
 use App\Http\Responses\PaginatedResponse;
 use App\Http\Responses\User\UserResponse;
+use App\Http\Responses\User\UserRolesAndPermissionsResponse;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -100,6 +102,31 @@ class UserController extends Controller
                 Code: 422,
                 Content: $exception->errors()
             );
+        } catch (Exception $exception) {
+            return ApiResponse::error(
+                Message: $exception->getMessage(),
+                Code: 500
+            );
+        }
+    }
+
+    /**
+     * Listado paginado de Usuarios.
+     *
+     * @param int $id
+     * @param GetUserRolesAndPermissionsAction $action
+     * @return ApiResponse<UserRolesAndPermissionsResponse>
+     */
+    public function getUserRolesAndPermissions(int $id, GetUserRolesAndPermissionsAction $action): ApiResponse
+    {
+        try {
+            $results = $action->execute($id);
+
+            return ApiResponse::success(
+                Content: $results,
+                Message: 'Listado de usuarios obtenido correctamente'
+            );
+
         } catch (Exception $exception) {
             return ApiResponse::error(
                 Message: $exception->getMessage(),

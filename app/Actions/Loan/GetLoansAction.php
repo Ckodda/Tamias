@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Loans;
+namespace App\Actions\Loan;
 
 use App\Http\Requests\Loan\GetLoansRequest;
 use App\Http\Responses\Loan\LoanResponse;

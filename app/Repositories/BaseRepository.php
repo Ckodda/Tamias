@@ -62,4 +62,37 @@ abstract class BaseRepository
 
         return $instance->newCollection($models);
     }
+
+    /**
+     * Mapea un array de objetos stdClass a una colección de objetos de una clase específica (No-Eloquent).
+     * Ideal para procedimientos con resultados personalizados.
+     *
+     * @template T
+     * @param array $results Array de objetos stdClass.
+     * @param class-string<T> $targetClass La clase destino.
+     * @return \Illuminate\Support\Collection<int, T>
+     */
+    protected function mapResultsToObjects(array $results, string $targetClass): \Illuminate\Support\Collection
+    {
+        return collect($results)->map(function ($result) use ($targetClass) {
+            return $this->mapToObject($result, $targetClass);
+        });
+    }
+
+    /**
+     * Mapea un objeto stdClass a una instancia de una clase específica.
+     *
+     * @template T
+     * @param stdClass $result
+     * @param class-string<T> $targetClass
+     * @return T
+     */
+    protected function mapToObject(stdClass $result, string $targetClass): object
+    {
+        $instance = new $targetClass();
+        foreach (get_object_vars($result) as $key => $value) {
+            $instance->{$key} = $value;
+        }
+        return $instance;
+    }
 }

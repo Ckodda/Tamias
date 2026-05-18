@@ -7,4 +7,6 @@ Route::prefix('users')->middleware('auth:api')->group(function () {
     Route::get('/', [UserController::class, 'index']);
     Route::post('/', [UserController::class, 'store']);
     Route::put('/', [UserController::class, 'update']);
+    Route::get('/{id}/roles-and-permissions', [UserController::class, 'getUserRolesAndPermissions']);
+
 });

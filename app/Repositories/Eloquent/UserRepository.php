@@ -3,6 +3,7 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\User;
+use App\Models\UserRolesAndPermissions;
 use App\Repositories\BaseRepository;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -91,5 +92,31 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
             return $this->mapResultToModel($row, User::class);
         } catch (ValidationException|Exception $e) { DB::rollBack(); throw $e; }
+    }
+
+    /**
+     * Obtiene los roles y permisos efectivos mapeados al objeto UserRolesAndPermissions.
+     * @throws Exception
+     */
+    public function getRolesAndPermissions(int $userId): \Illuminate\Support\Collection
+    {
+        $cursorName = 'rs_RolesPermissions';
+        try {
+            DB::beginTransaction();
+            $results = $this->callProcedure(
+                procedure: '"UsersPkg"."GetUserRolesAndPermissions"',
+                parameters: [$userId],
+                cursorName: $cursorName
+            );
+            DB::commit();
+
+            // Validación de errores de lógica de negocio devueltos por el SP
+            if (!empty($results) && isset($results[0]->ErrorId) && $results[0]->ErrorId > 0) {
+                throw new Exception($results[0]->ErrorMessage);
+            }
+
+            // Mapeamos a la clase Virtual para eliminar la incertidumbre de tipos
+            return $this->mapResultsToObjects($results, UserRolesAndPermissions::class);
+        } catch (Exception $e) { DB::rollBack(); throw $e; }
     }
 }
