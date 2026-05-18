@@ -4,6 +4,7 @@ namespace App\Repositories\Contracts;
 
 use App\Models\Virtual\UserCapabilityResult;
 use App\Models\User;
+use App\Models\UserCapabilities;
 use App\Models\UserRolesAndPermissions;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SupportCollection;
@@ -34,7 +35,7 @@ interface UserRepositoryInterface
      * Obtiene los roles y permisos de un usuario.
      * 
      * @param int $userId
-     * @return SupportCollection<int, UserRolesAndPermissions>
+     * @return SupportCollection<int, UserCapabilities> Colección de objetos UserCapabilities, cada uno representando un rol o permiso del usuario.
      */
     public function getRolesAndPermissions(int $userId): SupportCollection;
 }

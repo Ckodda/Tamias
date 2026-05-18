@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\User\CreateUserAction;
-use App\Actions\User\GetUserRolesAndPermissionsAction;
+use App\Actions\User\GetUserCapabilitiesAction;
 use App\Actions\User\GetUsersAction;
 use App\Actions\User\UpdateUserAction;
 use App\Http\Controllers\Controller;
@@ -12,14 +12,10 @@ use App\Http\Requests\User\GetUsersRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Responses\ApiResponse;
 use App\Http\Responses\PaginatedResponse;
+use App\Http\Responses\User\UserCapabilitiesResponse;
 use App\Http\Responses\User\UserResponse;
-use App\Http\Responses\User\UserRolesAndPermissionsResponse;
 use Exception;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use function Psy\debug;
 
 class UserController extends Controller
 {
@@ -114,10 +110,10 @@ class UserController extends Controller
      * Listado paginado de Usuarios.
      *
      * @param int $id
-     * @param GetUserRolesAndPermissionsAction $action
-     * @return ApiResponse<UserRolesAndPermissionsResponse>
+     * @param GetUserCapabilitiesAction $action
+     * @return ApiResponse<UserCapabilitiesResponse>
      */
-    public function getUserRolesAndPermissions(int $id, GetUserRolesAndPermissionsAction $action): ApiResponse
+    public function getUserCapabilities(int $id, GetUserCapabilitiesAction $action): ApiResponse
     {
         try {
             $results = $action->execute($id);

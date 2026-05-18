@@ -3,7 +3,7 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\User;
-use App\Models\UserRolesAndPermissions;
+use App\Models\UserCapabilities;
 use App\Repositories\BaseRepository;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -116,7 +116,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             }
 
             // Mapeamos a la clase Virtual para eliminar la incertidumbre de tipos
-            return $this->mapResultsToObjects($results, UserRolesAndPermissions::class);
+            return $this->mapResultsToObjects($results, UserCapabilities::class);
         } catch (Exception $e) { DB::rollBack(); throw $e; }
     }
 }
