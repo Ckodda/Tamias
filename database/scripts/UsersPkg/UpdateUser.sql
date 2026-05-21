@@ -37,7 +37,7 @@ BEGIN
         RETURNING *
     )
     SELECT 0 AS "ErrorId", NULL AS "ErrorMessage",
-           "Id", "FullName", "Email", "IsActive", "CreatedBy", "UpdatedBy", "CreatedAt", "updated_at" AS "UpdatedAt"
+           "Id", "FullName", "Email", "IsActive", "CreatedBy", "UpdatedBy", "CreatedAt", "UpdatedAt"
     FROM "Updated";
 
 EXCEPTION

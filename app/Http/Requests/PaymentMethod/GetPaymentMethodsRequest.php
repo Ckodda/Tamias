@@ -27,4 +27,18 @@ class GetPaymentMethodsRequest extends Data
         #[Nullable, IntegerType, Min(1)]
         public ?int $PageNumber = 1,
     ) {}
+
+    public static function prepareForPipeline(array $properties): array
+    {
+        if (array_key_exists('IsActive', $properties)) {
+               if($properties['IsActive']==''){
+                    $properties['IsActive'] = null;
+               }
+               else{
+                    $properties['IsActive'] = filter_var($properties['IsActive'], FILTER_VALIDATE_BOOLEAN);
+               }
+        }
+
+        return $properties;
+    }
 }

@@ -33,7 +33,7 @@ class UserController extends Controller
 
             return ApiResponse::success(
                 Content: $response,
-                Message: 'Evento registrado exitosamente',
+                Message: 'Usuario registrado exitosamente',
                 Code: 201
             );
 
