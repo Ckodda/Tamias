@@ -10,6 +10,7 @@ use Spatie\LaravelData\Attributes\Validation\Numeric;
 use Spatie\LaravelData\Attributes\Validation\Min;
 use Spatie\LaravelData\Attributes\Validation\In;
 use Spatie\LaravelData\Attributes\Validation\Date;
+use Spatie\LaravelData\Attributes\Validation\DateFormat;
 
 class CreateEventRequest extends Data
 {
@@ -29,7 +30,7 @@ class CreateEventRequest extends Data
         #[Required, StringType, In(['Active', 'Completed', 'Cancelled'])]
         public string $EventStatus,
 
-        #[Required, Date]
+        #[Required, DateFormat(format: 'Y-m-d')]
         public string $StartDate,
     ) {}
 }

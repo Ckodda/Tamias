@@ -9,6 +9,7 @@ use Spatie\LaravelData\Attributes\Validation\BooleanType;
 use Spatie\LaravelData\Attributes\Validation\Min;
 use Spatie\LaravelData\Attributes\Validation\Nullable;
 use Spatie\LaravelData\Attributes\Validation\Date;
+use Spatie\LaravelData\Attributes\Validation\DateFormat;
 
 class GetEventsRequest extends Data
 {
@@ -22,7 +23,7 @@ class GetEventsRequest extends Data
         #[Nullable, IntegerType]
         public ?int $CurrencyId,
 
-        #[Nullable, Date]
+        #[Nullable, DateFormat(format: 'Y-m-d')]
         public ?string $StartDate,
 
         #[Nullable, BooleanType]
@@ -34,4 +35,18 @@ class GetEventsRequest extends Data
         #[Nullable, IntegerType, Min(1)]
         public ?int $PageNumber = 1,
     ) {}
+
+    public static function prepareForPipeline(array $properties): array
+    {
+        if (array_key_exists('IsActive', $properties)) {
+               if($properties['IsActive']==''){
+                    $properties['IsActive'] = null;
+               }
+               else{
+                    $properties['IsActive'] = filter_var($properties['IsActive'], FILTER_VALIDATE_BOOLEAN);
+               }
+        }
+
+        return $properties;
+    }
 }
