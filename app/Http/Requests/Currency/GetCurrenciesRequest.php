@@ -15,6 +15,9 @@ use Spatie\LaravelData\Attributes\WithCastable;
 class GetCurrenciesRequest extends Data
 {
     public function __construct(
+        #[Nullable, IntegerType]
+        public ?int $Id,
+        
         #[Nullable, StringType]
         public ?string $CurrencyName,
 

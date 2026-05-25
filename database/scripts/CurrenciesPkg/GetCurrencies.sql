@@ -1,5 +1,6 @@
 -- Procedimiento para obtener monedas con filtros y paginación
 CREATE OR REPLACE PROCEDURE "CurrenciesPkg"."GetCurrencies"(
+     "PO_Id" INTEGER DEFAULT NULL,
     "P_CurrencyName" VARCHAR DEFAULT NULL,
     "P_CurrencyCode" VARCHAR DEFAULT NULL,
     "P_IsActive" BOOLEAN DEFAULT NULL,
@@ -26,6 +27,7 @@ BEGIN
     WHERE ("P_CurrencyName" IS NULL OR "CurrencyName" ILIKE '%' || "P_CurrencyName" || '%')
       AND ("P_CurrencyCode" IS NULL OR "CurrencyCode" = "P_CurrencyCode")
       AND ("P_IsActive" IS NULL OR "IsActive" = "P_IsActive")
+      AND ("P_Id" IS NULL OR "Id" = "P_Id")
     ORDER BY "CurrencyName" ASC
     LIMIT "P_PageSize"
     OFFSET ("P_PageNumber" - 1) * "P_PageSize";

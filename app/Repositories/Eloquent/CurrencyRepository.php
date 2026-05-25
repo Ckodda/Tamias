@@ -64,6 +64,7 @@ class CurrencyRepository extends BaseRepository implements CurrencyRepositoryInt
      * @throws Exception
      */
     public function getAll(
+        ?int $id = null,
         ?string $currencyName = null,
         ?string $currencyCode = null,
         ?bool $isActive = null,
@@ -77,7 +78,7 @@ class CurrencyRepository extends BaseRepository implements CurrencyRepositoryInt
 
             $results = $this->callProcedure(
                 procedure: '"CurrenciesPkg"."GetCurrencies"',
-                parameters: [$currencyName, $currencyCode, $isActive, $pageSize, $pageNumber],
+                parameters: [ $id, $currencyName, $currencyCode, $isActive, $pageSize, $pageNumber],
                 cursorName: $cursorName
             );
 

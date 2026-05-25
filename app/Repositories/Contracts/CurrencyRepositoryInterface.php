@@ -22,6 +22,7 @@ interface CurrencyRepositoryInterface
      * Obtiene todas las monedas con filtros y paginación.
      */
     public function getAll(
+        ?int $id = null,
         ?string $currencyName = null,
         ?string $currencyCode = null,
         ?bool $isActive = null,

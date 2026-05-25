@@ -22,6 +22,7 @@ class GetCurrenciesAction
     public function execute(GetCurrenciesRequest $request): PaginatedResponse
     {
         $collection = $this->repository->getAll(
+            id: $request->Id,
             currencyName: $request->CurrencyName,
             currencyCode: $request->CurrencyCode,
             isActive: $request->IsActive,
