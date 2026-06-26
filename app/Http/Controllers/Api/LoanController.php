@@ -29,8 +29,7 @@ class LoanController extends Controller
 
             return ApiResponse::success(
                 Content: $response,
-                Message: 'Evento registrado exitosamente',
-                Code: 201
+                Message: 'Loan listado exitosamente'
             );
         } catch (\Exception $exception) {
             return ApiResponse::error(
@@ -53,7 +52,7 @@ class LoanController extends Controller
 
             return ApiResponse::success(
                 Content: $response,
-                Message: 'Evento registrado exitosamente',
+                Message: 'Loan registrado exitosamente',
                 Code: 201
             );
 
