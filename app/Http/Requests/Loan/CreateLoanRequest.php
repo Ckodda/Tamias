@@ -2,12 +2,8 @@
 
 namespace App\Http\Requests\Loan;
 
-use Spatie\LaravelData\Attributes\Validation\BooleanType;
-use Spatie\LaravelData\Attributes\Validation\Nullable;
 use Spatie\LaravelData\Data;
-use Spatie\LaravelData\Attributes\Validation\Boolean;
 use Spatie\LaravelData\Attributes\Validation\Date;
-use Spatie\LaravelData\Attributes\Validation\Exists;
 use Spatie\LaravelData\Attributes\Validation\In;
 use Spatie\LaravelData\Attributes\Validation\IntegerType;
 use Spatie\LaravelData\Attributes\Validation\Max;

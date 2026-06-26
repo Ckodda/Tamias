@@ -8,6 +8,11 @@ use Illuminate\Support\Carbon;
 /**
  * @property int $Id
  * @property int $CostCenterId
+ * @property string $CostCenterName
+ * @property int $CurrencyId
+ * @property string $CurrencyCode
+ * @property string $CurrencySymbol
+ * @property string $CurrencyName
  * @property string $EventName
  * @property float $TargetAmount
  * @property string $EventStatus

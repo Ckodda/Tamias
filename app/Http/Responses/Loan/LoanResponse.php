@@ -15,7 +15,7 @@ class LoanResponse extends Data
         public float $InterestAmount,
         public float $TotalToRepay,
         public string $RepaymentDueDate,
-        public float $CurrentBalance,
+        public ?float $CurrentBalance,
         public string $LoanStatus,
         public bool $IsActive,
         public int $CurrencyId,
